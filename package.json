@@ -1,7 +1,7 @@
 {
-  "name": "decky-plugin-template",
-  "version": "0.0.1",
-  "description": "A template to quickly create decky plugins from scratch, based on TypeScript and webpack",
+  "name": "decky-translate",
+  "version": "0.1.3",
+  "description": "Плагин для перевода текста на Steam Deck с помощью OCR и машинного перевода",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
@@ -15,11 +15,12 @@
   "keywords": [
     "decky",
     "plugin",
-    "plugin-template",
     "steam-deck",
-    "deck"
+    "deck",
+    "translation",
+    "ocr"
   ],
-  "author": "You <you@you.tld>",
+  "author": "Decky Translate Team",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/SteamDeckHomebrew/decky-plugin-template/issues"

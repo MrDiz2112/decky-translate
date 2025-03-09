@@ -1,11 +1,17 @@
 {
-  "name": "Example Plugin",
-  "author": "John Doe",
-  "flags": ["debug", "_root"],
+  "name": "Decky Translate",
+  "author": "Decky Translate Team",
+  "flags": [
+    "debug",
+    "_root"
+  ],
   "api_version": 1,
   "publish": {
-    "tags": ["template", "root"],
-    "description": "Decky example plugin.",
+    "tags": [
+      "translation",
+      "utility"
+    ],
+    "description": "Плагин для перевода текста на Steam Deck с помощью OCR и машинного перевода.",
     "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
   }
 }

@@ -1,0 +1,1 @@
+#!/bin/sh\n    SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"\n    export LD_LIBRARY_PATH="$SCRIPT_DIR/../lib:$LD_LIBRARY_PATH"\n    export TESSDATA_PREFIX="$SCRIPT_DIR/../tessdata"\n    exec "$SCRIPT_DIR/tesseract" "$@"

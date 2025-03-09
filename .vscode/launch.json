@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Steam Deck",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "your-steam-deck-ip",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/home/deck/homebrew/plugins/decky-screenshot-ocr"
+                }
+            ]
+        }
+    ]
+}

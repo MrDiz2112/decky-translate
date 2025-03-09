@@ -1,15 +1,84 @@
+# Decky Translate
+
+Плагин для Steam Deck, который позволяет переводить текст на экране с помощью OCR (оптического распознавания символов) и машинного перевода.
+
+## Возможности
+
+- Создание скриншота текущего экрана
+- Распознавание текста на скриншоте с помощью Tesseract OCR
+- Перевод распознанного текста с использованием LibreTranslate API
+- Поддержка нескольких языков для перевода
+
+## Поддерживаемые языки
+
+- Английский (English)
+- Русский
+- Немецкий (Deutsch)
+- Французский (Français)
+- Испанский (Español)
+- Итальянский (Italiano)
+- Японский (日本語)
+- Корейский (한국어)
+- Китайский (中文)
+
+## Установка
+
+1. Установите [Decky Loader](https://github.com/SteamDeckHomebrew/decky-loader)
+2. Откройте магазин плагинов Decky
+3. Найдите и установите плагин "Decky Translate"
+
+## Использование
+
+1. Откройте меню Steam (кнопка Steam на Steam Deck)
+2. Перейдите в раздел плагинов Decky (значок ... в правом верхнем углу)
+3. Выберите плагин "Decky Translate"
+4. Выберите язык оригинала и язык перевода
+5. Нажмите кнопку "Сделать скриншот и перевести"
+6. Дождитесь завершения распознавания и перевода
+7. Просмотрите результаты в открывшемся модальном окне
+
+## Зависимости
+
+- Tesseract OCR для распознавания текста
+- LibreTranslate API для перевода
+
+## Разработка
+
+### Требования
+
+- Node.js и pnpm
+- Python 3.9+
+- Tesseract OCR
+
+### Сборка
+
+```bash
+# Установка зависимостей
+pnpm install
+
+# Сборка плагина
+pnpm build
+
+# Отправка на Steam Deck для тестирования
+./deploy_to_deck.sh
+```
+
+## Лицензия
+
+BSD-3-Clause
+
 # Decky Plugin Template [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://deckbrew.xyz/discord)
 
 Reference example for using [decky-frontend-lib](https://github.com/SteamDeckHomebrew/decky-frontend-lib) (@decky/ui) in a [decky-loader](https://github.com/SteamDeckHomebrew/decky-loader) plugin.
 
-### **Please also refer to the [wiki](https://wiki.deckbrew.xyz/en/user-guide/home#plugin-development) for important information on plugin development and submissions/updates. currently documentation is split between this README and the wiki which is something we are hoping to rectify in the future.**  
+### **Please also refer to the [wiki](https://wiki.deckbrew.xyz/en/user-guide/home#plugin-development) for important information on plugin development and submissions/updates. currently documentation is split between this README and the wiki which is something we are hoping to rectify in the future.**
 
 ## Developers
 
 ### Dependencies
 
-This template relies on the user having Node.js v16.14+ and `pnpm` (v9) installed on their system.  
-Please make sure to install pnpm v9 to prevent issues with CI during plugin submission.  
+This template relies on the user having Node.js v16.14+ and `pnpm` (v9) installed on their system.
+Please make sure to install pnpm v9 to prevent issues with CI during plugin submission.
 `pnpm` can be downloaded from `npm` itself which is recommended.
 
 #### Linux
@@ -28,7 +97,7 @@ If you would like to build plugins that have their own custom backends, Docker i
    2. ``pnpm run build``
    - These setup pnpm and build the frontend code for testing.
 3. Consult the [decky-frontend-lib](https://github.com/SteamDeckHomebrew/decky-frontend-lib) repository for ways to accomplish your tasks.
-   - Documentation and examples are still rough, 
+   - Documentation and examples are still rough,
    - Decky loader primarily targets Steam Deck hardware so keep this in mind when developing your plugin.
 4. If using VSCodium/VSCode, run the `setup` and `build` and `deploy` tasks. If not using VSCodium etc. you can derive your own makefile or just manually utilize the scripts for these commands as you see fit.
 
@@ -50,7 +119,7 @@ If you are developing with a backend for a plugin and would like to submit it to
 When building your plugin, the source code will be built and any finished binary or binaries will be output to ``backend/out`` (which is created during CI.)
 If your buildscript, makefile or any other build method does not place the binary files in the ``backend/out`` directory they will not be properly picked up during CI and your plugin will not have the required binaries included for distribution.
 
-Example:  
+Example:
 In our makefile used to demonstrate the CI process of building and distributing a plugin backend, note that the makefile explicitly creates the `out` folder (``backend/out``) and then compiles the binary into that folder. Here's the relevant snippet.
 
 ```make
@@ -63,7 +132,7 @@ The CI does create the `out` folder itself but we recommend creating it yourself
 
 Note: When locally building your plugin it will be placed into a folder called 'out' this is different from the concept described above.
 
-The out folder is not sent to the final plugin, but is then put into a ``bin`` folder which is found at the root of the plugin's directory.  
+The out folder is not sent to the final plugin, but is then put into a ``bin`` folder which is found at the root of the plugin's directory.
 More information on the bin folder can be found below in the distribution section below.
 
 ### Distribution
@@ -86,7 +155,7 @@ pluginname-v1.0.0.zip (version number is optional but recommended for users sake
    |  dist/ <directory> [required]
    |      |
    |      index.js [required]
-   | 
+   |
    package.json [required]
    plugin.json [required]
    main.py {required if you are using the python backend of decky-loader: serverAPI}

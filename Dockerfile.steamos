@@ -1,0 +1,60 @@
+FROM archlinux:latest
+
+# Установка необходимых пакетов
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm \
+    base-devel \
+    git \
+    gcc \
+    make \
+    autoconf \
+    automake \
+    libtool \
+    pkg-config \
+    patchelf \
+    leptonica \
+    libpng \
+    libjpeg-turbo \
+    libtiff \
+    zlib \
+    cairo \
+    pango \
+    icu \
+    curl
+
+# Создание директории для исходных кодов
+WORKDIR /build
+
+# Клонирование и сборка tesseract
+RUN git clone --depth 1 --branch 5.5.0 https://github.com/tesseract-ocr/tesseract.git && \
+    cd tesseract && \
+    ./autogen.sh && \
+    ./configure --prefix=/usr/local && \
+    make -j$(nproc) && \
+    make install
+
+# Скачивание файлов данных для Tesseract
+RUN mkdir -p /usr/local/share/tessdata && \
+    cd /usr/local/share/tessdata && \
+    curl -O https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata && \
+    curl -O https://github.com/tesseract-ocr/tessdata/raw/main/rus.traineddata
+
+# Копирование бинарных файлов и зависимостей в /output
+RUN mkdir -p /output/bin /output/lib /output/tessdata && \
+    cp /usr/local/bin/tesseract /output/bin/ && \
+    cp -r /usr/local/share/tessdata/*.traineddata /output/tessdata/ && \
+    ldd /usr/local/bin/tesseract | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' /output/lib/
+
+# Скрипт для запуска tesseract с правильными путями библиотек
+RUN echo '#!/bin/sh\n\
+    SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"\n\
+    export LD_LIBRARY_PATH="$SCRIPT_DIR/../lib:$LD_LIBRARY_PATH"\n\
+    export TESSDATA_PREFIX="$SCRIPT_DIR/../tessdata"\n\
+    exec "$SCRIPT_DIR/tesseract" "$@"' > /output/bin/run_tesseract.sh && \
+    chmod +x /output/bin/run_tesseract.sh
+
+# Определение тома для вывода
+VOLUME /dist
+
+# Копирование результатов в том
+CMD cp -r /output/* /dist/
